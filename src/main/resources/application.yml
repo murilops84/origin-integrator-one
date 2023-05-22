@@ -1,0 +1,50 @@
+server:
+  port: 7001
+  servlet:
+    context-path: "/origin-one/v1"
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: iply84m2
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+    hibernate:
+      ddl-auto: update
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: origin_one
+      auto-offset-reset: earliest
+      key-deserialization: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+topic:
+  name:
+    consumer: response
+
+auto:
+  create:
+    topics:
+      enable: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    br:
+      com:
+        mps: DEBUG
+
+api-gateway:
+  url: http://localhost:9999/api-gateway/v1
+  uri:
+    create: /message
